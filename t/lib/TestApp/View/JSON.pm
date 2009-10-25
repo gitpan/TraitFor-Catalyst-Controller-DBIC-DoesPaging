@@ -1,5 +1,5 @@
 package TestApp::View::JSON;
-our $VERSION = '0.092970';
+our $VERSION = '0.092980';
 
 
 use parent 'Catalyst::View::JSON';

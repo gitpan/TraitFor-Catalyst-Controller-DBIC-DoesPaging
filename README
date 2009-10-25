@@ -3,11 +3,11 @@ NAME
     search, sort, and more easily using DBIx::Class
 
 VERSION
-    version 0.092970
+    version 0.092980
 
 SYNOPSIS
      package MyApp::Controller::Foo;
-    our $VERSION = '0.092970';
+    our $VERSION = '0.092980';
 
      use Moose;
      BEGIN { extends 'Catalyst::Controller' }
