@@ -1,5 +1,5 @@
 package Catalyst::TraitFor::Controller::DBIC::DoesPaging;
-our $VERSION = '0.092980';
+our $VERSION = '0.093010';
 
 
 
@@ -69,7 +69,7 @@ sub simple_search {
    foreach ( keys %{ $c->request->params } ) {
       if ( $c->request->params->{$_} and not $skips{$_} ) {
          # should be configurable
-         $searches->{$_} = { like => q{%} . $c->request->params->{$_} . q{%} };
+         $searches->{$_} = { like => [map "%$_%", $c->request->param($_)] };
       }
    }
 
@@ -96,7 +96,6 @@ sub simple_sort {
 
 
 
-
 =pod
 
 =head1 NAME
@@ -105,14 +104,13 @@ Catalyst::TraitFor::Controller::DBIC::DoesPaging - Helps you paginate, search, s
 
 =head1 VERSION
 
-version 0.092980
-
-=pod 
+version 0.093010
 
 =head1 SYNOPSIS
 
  package MyApp::Controller::Foo;
-our $VERSION = '0.092980';
+our $VERSION = '0.093010';
+
 
  use Moose;
  BEGIN { extends 'Catalyst::Controller' }
@@ -286,7 +284,8 @@ Note that this method uses the $rs->delete method, as opposed to $rs->delete_all
  my $searched_rs = $self->simple_search($c, $c->model('DB::Foo'));
 
 Searches rs based on all fields in the request, except for fields listed in
-C<ignored_params>.  Searches with fieldname => { -like => "%$value%" }.
+C<ignored_params>.  Searches with fieldname => { -like => "%$value%" }. If there are
+multiple values for a CGI parameter it will use all values via an C<or>.
 
 =head2 simple_sort
 
@@ -311,14 +310,12 @@ ArrayRef of params that will be ignored in simple_search, defaults to:
 
  [qw{limit start sort dir _dc rm xaction}]
 
-=back 
+=back
 
 =head1 CREDITS
 
 Thanks to Micro Technology Services, Inc. for funding the initial development
 of this module.
-
-
 
 =head1 AUTHOR
 
@@ -331,8 +328,7 @@ This software is copyright (c) 2009 by Arthur Axel "fREW" Schmidt.
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-=cut 
-
+=cut
 
 
 __END__

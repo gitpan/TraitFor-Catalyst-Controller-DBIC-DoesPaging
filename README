@@ -3,11 +3,12 @@ NAME
     search, sort, and more easily using DBIx::Class
 
 VERSION
-    version 0.092980
+    version 0.093010
 
 SYNOPSIS
      package MyApp::Controller::Foo;
-    our $VERSION = '0.092980';
+    our $VERSION = '0.093010';
+
 
      use Moose;
      BEGIN { extends 'Catalyst::Controller' }
@@ -178,6 +179,8 @@ METHODS
 
     Searches rs based on all fields in the request, except for fields listed
     in "ignored_params". Searches with fieldname => { -like => "%$value%" }.
+    If there are multiple values for a CGI parameter it will use all values
+    via an "or".
 
   simple_sort
      my $sorted_rs = $self->simple_sort($c, $c->model('DB::Foo'));
